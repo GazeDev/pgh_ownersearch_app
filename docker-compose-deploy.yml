@@ -1,0 +1,14 @@
+version: '3'
+services:
+  deploy:
+    build: .
+    hostname: app
+    command: ./surge-deploy.sh
+    env_file:
+      - variables-deploy.env
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+networks:
+  default:
+    driver: bridge

@@ -1,0 +1,50 @@
+<section class="header">
+  <h2>Welcome to PA Owner Search</h2>
+
+  <h3>Powered by <a href="https://housingdb.org" target="_blank">HousingDB</a></h3>
+
+</section>
+
+<section *ngIf="!authService.isAuthenticated">
+  <h2>Access PA Owner Search</h2>
+  <button routerLink="#" mat-raised-button color="primary" (click)="doLogin()">Log in/ Sign up Now</button>
+</section>
+
+<section>
+  Start a search:<br>
+  <form (submit)="submit()" [formGroup]="form" #ngFormDirective="ngForm" [ngClass]="{'submit-attempt': submitAttempt}">
+    <mat-form-field appearance="standard" floatLabel="always">
+      <mat-label>Start</mat-label>
+      <input matInput formControlName="start">
+    </mat-form-field>
+    <mat-form-field appearance="standard" floatLabel="always">
+      <mat-label>End</mat-label>
+      <input matInput formControlName="end">
+    </mat-form-field>
+    <mat-form-field appearance="standard" floatLabel="always">
+      <mat-label>Queues</mat-label>
+      <input matInput formControlName="queues">
+    </mat-form-field>
+    <div class="form-actions">
+      <button mat-raised-button color="primary" type="submit">Submit</button>
+    </div>
+  </form>
+</section>
+
+<section *ngIf="authService.isAuthenticated">
+  <h2>Enumeration status</h2>
+  <div>
+    events: {{ toString(events) }}
+  </div>
+  <div class="">
+    <h3>Multiple progress</h3>
+    <div class="search" *ngFor="let item of events | keyvalue">
+      search: {{ item.key }},
+      <div class="queue" *ngFor="let q of item.value | keyvalue">
+        queue: {{ q.key }}, <br>
+        status: {{ q.value.status }}, <br>
+        id: {{ q.value.id }},
+      </div>
+    </div>
+  </div>
+</section>

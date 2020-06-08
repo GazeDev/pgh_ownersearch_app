@@ -1,0 +1,44 @@
+<mat-card itemscope itemtype="">
+  <mat-card-title *ngIf="showTitle">
+    <a routerLink="/landlord/{{ landlord.id }}">
+      {{ landlord?.name }}
+    </a>
+  </mat-card-title>
+  <mat-card-content class="clearfix">
+    <div class="units-reviews-stamp clearfix">
+      <div class="units clearfix">
+        <span class="bedrooms">
+          <span class="number">
+            {{ landlord?.metadata?.propertyCount || 0 }}
+          </span>
+          <span class="label">
+            Properties
+          </span>
+        </span>
+      </div>
+      <div class="units-reviews-divider"><hr></div>
+      <div class="reviews">
+        <span class="stars">
+          <stars-display [rating]="landlord?.metadata?.reviewAverage"></stars-display>
+        </span>
+        <span class="count" title="{{(landlord?.metadata?.externalReviewCount || 0) }} External">
+          {{ (landlord?.metadata?.reviewCount || 0) + (landlord?.metadata?.externalReviewCount || 0) }} Reviews
+        </span>
+      </div>
+    </div>
+    <div class="location-landlord-stamp">
+      <div class="neighborhood">
+        <a [href]="'tel:'+landlord.phone" target="_blank" rel="noopener noreferrer nofollow">{{ landlord.phone }}</a>
+        <ng-container *ngIf="!landlord.phone">&nbsp;</ng-container>
+      </div>
+      <div class="address">
+        <a [href]="landlord.website" target="_blank" rel="noopener noreferrer nofollow">{{ landlord.website }}</a>
+        <ng-container *ngIf="!landlord.website">&nbsp;</ng-container>
+      </div>
+      <div class="landlord">
+        <a [href]="'mailto:'+landlord.email" target="_blank" rel="noopener noreferrer nofollow">{{ landlord.email }}</a>
+        <ng-container *ngIf="!landlord.email">&nbsp;</ng-container>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
